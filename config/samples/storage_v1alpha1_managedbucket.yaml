@@ -1,0 +1,14 @@
+apiVersion: storage.example.com/v1alpha1
+kind: ManagedBucket
+metadata:
+  labels:
+    app.kubernetes.io/name: go-k8s-operator-sdk
+    app.kubernetes.io/managed-by: kustomize
+  name: managedbucket-sample
+spec:
+  bucketName: managedbucket-sample-0001
+  region: eu-central-1
+  versioning: Enabled
+  tags:
+    team: platform
+    purpose: sample

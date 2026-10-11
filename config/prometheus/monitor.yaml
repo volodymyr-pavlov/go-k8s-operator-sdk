@@ -1,0 +1,24 @@
+# Prometheus Monitor Service (Metrics)
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    control-plane: controller-manager
+    app.kubernetes.io/name: go-k8s-operator-sdk
+    app.kubernetes.io/managed-by: kustomize
+  name: controller-manager-metrics-monitor
+  namespace: system
+spec:
+  endpoints:
+    - path: /metrics
+      port: https # Ensure this is the name of the port that exposes HTTPS metrics
+      scheme: https
+      bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+      tlsConfig:
+        # This base skips verification of the metrics certificate, which the manager makes for itself. To verify it, use
+        # cert-manager and the patch monitor_tls_patch.yaml in this directory, which reads the metrics-server-cert secret.
+        insecureSkipVerify: true
+  selector:
+    matchLabels:
+      control-plane: controller-manager
+      app.kubernetes.io/name: go-k8s-operator-sdk

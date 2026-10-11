@@ -1,0 +1,17 @@
+# The operator with an S3 emulator in the same namespace, for a local cluster such as kind. The emulator needs no
+# account, and the operator reaches it with a fixed endpoint and dummy credentials. Do not use it anywhere else.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: go-k8s-operator-sdk-system
+resources:
+  - ../default
+  - s3-emulator.yaml
+patches:
+  - path: manager_env_patch.yaml
+    target:
+      kind: Deployment
+      name: .*controller-manager
+images:
+  - name: example.com/go-k8s-operator-sdk
+    newName: go-k8s-operator-sdk
+    newTag: local

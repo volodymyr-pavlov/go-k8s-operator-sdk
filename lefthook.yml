@@ -1,0 +1,25 @@
+# Git hooks. `make hooks` installs them. They give feedback before a commit leaves the machine; the pipeline runs the
+# same checks again (`make verify`), so a hook that is skipped with --no-verify costs nothing but time.
+
+commit-msg:
+  jobs:
+    # semantic-release reads the commit messages to decide the next version, so each one starts with a type.
+    - name: conventional-commit
+      run: |
+        head -n 1 {1} | grep -Eq '^(feat|fix|docs|chore|ci|build|refactor|test|perf|style|revert)(\([a-z0-9-]+\))?!?: .+' \
+          || { echo 'The first line must look like "type(scope): what changed". Types: feat, fix, docs, chore, ci, build, refactor, test, perf, style, revert.' >&2; exit 1; }
+
+pre-commit:
+  parallel: true
+  jobs:
+    - name: gofmt
+      glob: '*.go'
+      run: test -z "$(gofmt -l {staged_files})" || { gofmt -l {staged_files}; exit 1; }
+
+    - name: style
+      glob: '*.go'
+      run: make check-style
+
+    - name: lint
+      glob: '*.go'
+      run: make lint

@@ -1,8 +1,8 @@
 # go-k8s-operator-sdk
 
-<div align="center">
-<a href="https://gitlab.com/volodymyr-pavlov/go-k8s-operator-sdk/-/pipelines"><img src="https://gitlab.com/volodymyr-pavlov/go-k8s-operator-sdk/badges/main/pipeline.svg" alt="Pipeline status"></a>
-<a href="https://gitlab.com/volodymyr-pavlov/go-k8s-operator-sdk/-/releases"><img src="https://gitlab.com/volodymyr-pavlov/go-k8s-operator-sdk/-/badges/release.svg" alt="Latest release"></a>
+<div>
+<a href="https://github.com/volodymyr-pavlov/go-k8s-operator-sdk/actions/workflows/ci.yml"><img src="https://github.com/volodymyr-pavlov/go-k8s-operator-sdk/actions/workflows/ci.yml/badge.svg" alt="CI status"></a>
+<a href="https://github.com/volodymyr-pavlov/go-k8s-operator-sdk/releases"><img src="https://img.shields.io/github/v/release/volodymyr-pavlov/go-k8s-operator-sdk" alt="Latest release"></a>
 <a href="go.mod"><img src="https://img.shields.io/badge/go-1.27-00ADD8.svg?logo=go&amp;logoColor=white" alt="Go 1.27"></a>
 <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT"></a>
 </div>
@@ -144,7 +144,7 @@ The leader election needs only its lease. On AWS, give the operator the S3 actio
 
 ## Organizing a team around several operators
 
-- **One repository for each operator**, from one template: the same layout, the same CI pipeline, the same style checks
+- **One repository for each operator**, from one template: the same layout, the same CI workflow, the same style checks
   and the same release flow as this one. A new operator starts from it in a day, and an improvement to the template is
   applied to all of them.
 - **A small shared Go module** for what every operator repeats: finalizer handling, conditions, outcome metrics, the AWS
